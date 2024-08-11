@@ -4,15 +4,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Metadata } from "next";
 
-export const description =
-  "A login page with two columns. The first column has the login form with email and password. There's a Forgot your passwork link and a link to sign up if you do not have an account. The second column has a cover image.";
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Login",
+    description: "Login to your account",
+  };
+}
 
-export const iframeHeight = "800px";
-
-export const containerClassName = "w-full h-full p-4 lg:p-0";
-
-export default function Dashboard() {
+export default function login() {
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
