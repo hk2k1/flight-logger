@@ -44,7 +44,7 @@ export default function UserAuthForm() {
   const onSubmit = async (values: UserFormValue) => {
     startTransition(() => {
       login(values).then((data) => {
-        if (data.error) {
+        if (data?.error) {
           toast.error(data.error);
           return;
         }

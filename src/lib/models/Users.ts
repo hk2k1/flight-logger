@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     bio: String,
     flightLogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "FlightLogs" }],
     path: String,
-    isAdmin: { type: Boolean, default: false },
+    role: { type: String, default: "user" },
   },
   { timestamps: true }
 );

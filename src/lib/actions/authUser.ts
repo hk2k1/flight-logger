@@ -25,7 +25,7 @@ import bcrypt from "bcryptjs";
 export const authUser = async (credentials: any) => {
   await connectToDB();
   const user: any = await getUserByEmail(credentials.email);
-  console.log("user", user);
+  // console.log("user", user);
   if (!user || !user.password) {
     return null;
   }
