@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { connectToDB } from "../mongoose";
 import Users from "../models/Users";
 import { getUserByEmail } from "./user.action";
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedData = RegisterSchema.safeParse(values);
