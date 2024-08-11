@@ -2,13 +2,22 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    id: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true, lowercase: true },
+    username: { type: String, lowercase: true },
     name: { type: String, required: true },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
     image: String,
     bio: String,
-    flightLogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "FlightLog" }],
+    flightLogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "FlightLogs" }],
     path: String,
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

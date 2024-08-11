@@ -49,7 +49,7 @@ export default function RegisterForm() {
           toast.error(data.error);
           return;
         }
-        toast.success("User Registered!");
+        toast.success("Account Created!");
       });
     });
     // { ...  signIn form action } TODO

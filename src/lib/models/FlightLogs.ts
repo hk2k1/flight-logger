@@ -21,7 +21,7 @@ const FlightLogSchema = new Schema<IFlightLog>(
   }
 );
 
-const FlightLog =
-  models.FlightLog || model<IFlightLog>("FlightLog", FlightLogSchema);
+const FlightLogs =
+  models.FlightLog || model<IFlightLog>("FlightLogs", FlightLogSchema);
 
-export default FlightLog;
+export default FlightLogs;

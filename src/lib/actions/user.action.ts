@@ -26,3 +26,21 @@ export async function updateUser(
     throw new Error(`Error updating user: ${error.message}`);
   }
 }
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    await connectToDB();
+    return await Users.findOne({ email });
+  } catch {
+    return null;
+  }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+    await connectToDB();
+    return await Users.findOne({ id });
+  } catch {
+    return null;
+  }
+};
