@@ -3,18 +3,18 @@ import mongoose, { Schema, model, models } from "mongoose";
 export interface IFlightLog {
   tailNumber: string;
   flightID: string;
-  takeoff: Date;
-  landing: Date;
-  duration: number;
+  takeoff: string;
+  landing: string;
+  duration: string;
 }
 
 const FlightLogSchema = new Schema<IFlightLog>(
   {
     tailNumber: { type: String, required: true },
     flightID: { type: String, required: true },
-    takeoff: { type: Date, required: true },
-    landing: { type: Date, required: true },
-    duration: { type: Number, required: true },
+    takeoff: { type: String, required: true },
+    landing: { type: String, required: true },
+    duration: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -22,6 +22,6 @@ const FlightLogSchema = new Schema<IFlightLog>(
 );
 
 const FlightLogs =
-  models.FlightLog || model<IFlightLog>("FlightLogs", FlightLogSchema);
+  models.FlightLogs || model<IFlightLog>("FlightLogs", FlightLogSchema);
 
-export default FlightLogs;
+export default FlightLogs as mongoose.Model<IFlightLog>;

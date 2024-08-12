@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
 import Providers from "@/components/layout/providers";
 import { auth } from "@/auth";
+import { Toaster as ToastProvider } from "@/components/ui/toaster";
 
 const Mont = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -33,6 +34,7 @@ export default async function RootLayout({
         <Providers session={session}>
           <Toaster position="bottom-center" reverseOrder={false} />
           {children}
+          <ToastProvider />
         </Providers>
       </body>
     </html>

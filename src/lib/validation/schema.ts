@@ -3,9 +3,15 @@ import { z } from "zod";
 export const FlightLogSchema = z.object({
   tailNumber: z.string().min(1, "Tail number is required"),
   flightID: z.string().min(1, "Flight ID is required"),
-  takeoff: z.date(),
-  landing: z.date(),
-  duration: z.number().min(0, "Duration must be a positive number"),
+  takeoff: z.string().min(1, "Takeoff location is required"),
+  landing: z.string().min(1, "Landing location is required"),
+  duration: z
+    .string()
+    .min(1, "Duration is required")
+    .regex(
+      /^(\d+h)?\s*(\d+m)?$/,
+      "Invalid duration format. Use format like '2h 30m' or '45m'"
+    ),
 });
 
 export const UserSchema = z.object({
