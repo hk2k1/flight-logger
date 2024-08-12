@@ -9,4 +9,4 @@ export const authRoutes = ["/login", "/register"];
 export const apiAuthPrefix = "/api/auth";
 
 // default redirect path after login
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard";

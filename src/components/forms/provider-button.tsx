@@ -7,10 +7,12 @@ import { signIn } from "next-auth/react";
 import { auth } from "@/auth";
 import { register } from "@/lib/actions/register";
 import toast from "react-hot-toast";
+import { oAuthUser } from "@/lib/actions/authUser";
 
 export default function ProviderButton() {
   const onClick = async (provider: "google" | "github") => {
     await signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT });
+    // const user = await oAuthUser(account, profile);
   };
 
   return (
@@ -22,18 +24,19 @@ export default function ProviderButton() {
         onClick={() => onClick("google")}
       >
         <svg
-          role="img"
-          viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="currentColor"
           className="mr-2 h-4 w-4 "
         >
-          <title>Google</title>
-          <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
+          <path d="M3.06364 7.50914C4.70909 4.24092 8.09084 2 12 2C14.6954 2 16.959 2.99095 18.6909 4.60455L15.8227 7.47274C14.7864 6.48185 13.4681 5.97727 12 5.97727C9.39542 5.97727 7.19084 7.73637 6.40455 10.1C6.2045 10.7 6.09086 11.3409 6.09086 12C6.09086 12.6591 6.2045 13.3 6.40455 13.9C7.19084 16.2636 9.39542 18.0227 12 18.0227C13.3454 18.0227 14.4909 17.6682 15.3864 17.0682C16.4454 16.3591 17.15 15.3 17.3818 14.05H12V10.1818H21.4181C21.5364 10.8363 21.6 11.5182 21.6 12.2273C21.6 15.2727 20.5091 17.8363 18.6181 19.5773C16.9636 21.1046 14.7 22 12 22C8.09084 22 4.70909 19.7591 3.06364 16.4909C2.38638 15.1409 2 13.6136 2 12C2 10.3864 2.38638 8.85911 3.06364 7.50914Z"></path>
         </svg>
         {/* Google */}
       </Button>
       <Button
-        className="w-full text-gray-500"
+        className="w-full text-gray-400"
         variant="outline"
         type="button"
         onClick={() => onClick("github")}
