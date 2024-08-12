@@ -34,7 +34,9 @@ export const {
       return token;
     },
     async signIn({ account, profile }) {
-      const user = await oAuthUser(account, profile);
+      if (account?.provider != "credentials") {
+        const user = await oAuthUser(account, profile);
+      }
       return true;
     },
   },
@@ -51,14 +53,15 @@ export const {
     Credentials({
       async authorize(credentials: any) {
         try {
-          // console.log("credentials", credentials);
+          console.log("credentials", credentials);
           const user = await authUser(credentials); // Return null if user is not found or password doesn't match
-          // console.log("user", user);
+          console.log("user", user);
           if (!user) {
             throw new Error("user not found");
           }
           return user;
         } catch (error) {
+          console.log("error", error);
           return null;
         }
       },
