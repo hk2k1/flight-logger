@@ -11,13 +11,13 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     image: String,
     bio: String,
     flightLogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "FlightLogs" }],
     path: String,
     role: { type: String, default: "user" },
+    provider: { type: String, default: "email" },
   },
   { timestamps: true }
 );

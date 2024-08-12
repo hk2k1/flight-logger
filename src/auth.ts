@@ -1,11 +1,12 @@
 import NextAuth from "next-auth";
-// import GitHub from "next-auth/providers/github";
+import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "@/lib/validation/schema";
 import { getUserByEmail, getUserById } from "./lib/actions/user.action";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
-import { authUser } from "@/lib/actions/authUser";
+import { authUser, oAuthUser } from "@/lib/actions/authUser";
 
 export const {
   handlers: { GET, POST },
@@ -32,9 +33,21 @@ export const {
       token.role = existingUser.role;
       return token;
     },
+    async signIn({ account, profile }) {
+      const user = await oAuthUser(account, profile);
+      return true;
+    },
   },
   session: { strategy: "jwt" },
   providers: [
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    }),
     Credentials({
       async authorize(credentials: any) {
         try {
