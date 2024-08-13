@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -17,6 +18,57 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { deleteUser } from "@/lib/actions/user.action";
 import { Checkbox } from "@/components/ui/checkbox";
+
+// Define the CellAction component
+function CellAction({ user }: { user: IUser }) {
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      const message = await deleteUser(user.id);
+      toast({
+        title: "Success",
+        description: "User deleted successfully",
+      });
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete user",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <UpdateUserDrawer user={user}>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <Edit className="mr-2 h-4 w-4" /> Update
+          </DropdownMenuItem>
+        </UpdateUserDrawer>
+        <DropdownMenuItem
+          onSelect={(e) => {
+            e.preventDefault();
+            handleDelete();
+          }}
+        >
+          <Trash className="mr-2 h-4 w-4" /> Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export const columns: ColumnDef<IUser>[] = [
   {
@@ -76,57 +128,6 @@ export const columns: ColumnDef<IUser>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const user = row.original;
-      const { toast } = useToast();
-      const router = useRouter();
-
-      const handleDelete = async () => {
-        console.log("Deleting user handle:", user);
-        try {
-          const message = await deleteUser(user.id);
-          console.log("Message:", message);
-          toast({
-            title: "Success",
-            description: "User deleted successfully",
-          });
-          router.refresh();
-        } catch (error) {
-          console.error("Error deleting user:", error);
-          toast({
-            title: "Error",
-            description: "Failed to delete user",
-            variant: "destructive",
-          });
-        }
-      };
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <UpdateUserDrawer user={user}>
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <Edit className="mr-2 h-4 w-4" /> Update
-              </DropdownMenuItem>
-            </UpdateUserDrawer>
-            <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault();
-                handleDelete();
-              }}
-            >
-              <Trash className="mr-2 h-4 w-4" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <CellAction user={row.original} />,
   },
 ];

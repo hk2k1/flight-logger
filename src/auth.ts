@@ -56,7 +56,7 @@ export const {
     Credentials({
       async authorize(credentials: any) {
         try {
-          console.log("credentials", credentials);
+          // console.log("credentials", credentials);
           const user = await authUser(credentials); // Return null if user is not found or password doesn't match
           console.log("user", user);
           if (!user) {

@@ -48,7 +48,7 @@ export function UpdateFlightLogDrawer({
   const router = useRouter();
 
   const onSubmit = async (data: FlightLogFormData) => {
-    console.log("flightLog", flightLog);
+    // console.log("flightLog", flightLog);
     try {
       await updateFlightLog(flightLog.fid, data);
       toast({

@@ -20,6 +20,55 @@ import { useRouter } from "next/navigation";
 import { deleteFlightLog } from "@/lib/actions/flightlog.action";
 import { Checkbox } from "@/components/ui/checkbox";
 
+function CellAction({ flightLog }: { flightLog: IFlightLog }) {
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      await deleteFlightLog(flightLog.fid);
+      toast({
+        title: "Success",
+        description: "Flight log deleted successfully",
+      });
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting flight log:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete flight log",
+        variant: "destructive",
+      });
+    }
+  };
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <UpdateFlightLogDrawer flightLog={flightLog}>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <Edit className="mr-2 h-4 w-4" /> Update
+          </DropdownMenuItem>
+        </UpdateFlightLogDrawer>
+        <DropdownMenuItem
+          onSelect={(e) => {
+            e.preventDefault();
+            handleDelete();
+          }}
+        >
+          <Trash className="mr-2 h-4 w-4" /> Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 export const columns: ColumnDef<IFlightLog>[] = [
   {
     id: "select",
@@ -84,55 +133,6 @@ export const columns: ColumnDef<IFlightLog>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const flightLog = row.original;
-      const { toast } = useToast();
-      const router = useRouter();
-
-      const handleDelete = async () => {
-        try {
-          await deleteFlightLog(flightLog.fid);
-          toast({
-            title: "Success",
-            description: "Flight log deleted successfully",
-          });
-          router.refresh();
-        } catch (error) {
-          console.error("Error deleting flight log:", error);
-          toast({
-            title: "Error",
-            description: "Failed to delete flight log",
-            variant: "destructive",
-          });
-        }
-      };
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <UpdateFlightLogDrawer flightLog={flightLog}>
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <Edit className="mr-2 h-4 w-4" /> Update
-              </DropdownMenuItem>
-            </UpdateFlightLogDrawer>
-            <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault();
-                handleDelete();
-              }}
-            >
-              <Trash className="mr-2 h-4 w-4" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <CellAction flightLog={row.original} />,
   },
 ];

@@ -3,7 +3,7 @@
 export const publicRoutes = ["/not-found"];
 
 //routes that require authentication
-export const authRoutes = ["/login", "/register"];
+export const authRoutes = ["/register"];
 
 // routes that must always be accessible no matter the user's auth state
 export const apiAuthPrefix = "/api/auth";

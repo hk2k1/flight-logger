@@ -16,7 +16,6 @@ export async function getFlightLogs() {
   await connectToDB();
   // const user = await useCurrentUser();
   const user = await auth();
-  console.log("USER!!", user);
   let flightLogs;
   let totalCount;
 
@@ -86,7 +85,7 @@ export async function deleteFlightLog(fid: string) {
     }
   );
   if (!deletedFlightLog) {
-    console.log("ID", fid);
+    // console.log("ID", fid);
     throw new Error("Flight log not found");
   }
   return { message: "Flight log deleted successfully" };
