@@ -4,7 +4,7 @@ import { RegisterSchema } from "../validation/schema";
 import bcrypt from "bcrypt";
 import { connectToDB } from "../mongoose";
 import Users from "../models/Users";
-import { getUserByEmail } from "./user.action";
+import { getUserByEmail } from "./user-action-deprecated";
 import { v4 as uuidv4 } from "uuid";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {

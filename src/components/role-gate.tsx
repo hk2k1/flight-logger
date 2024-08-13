@@ -3,19 +3,22 @@
 import { useCurrentRole } from "@/lib/hooks/use-current-role";
 import React from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
+import { AlertCircle, Terminal } from "lucide-react";
 
 interface RoleGateProps {
   children: React.ReactNode;
-  allowedRoles: string;
+  allowedRoles: "user" | "admin";
 }
 
-export default function RoleGate({ children, allowedRoles }: RoleGateProps) {
-  const role = useCurrentRole();
+export default async function RoleGate({
+  children,
+  allowedRoles,
+}: RoleGateProps) {
+  const role = await useCurrentRole();
   if (role !== allowedRoles) {
     return (
-      <Alert>
-        <Terminal className="h-4 w-4" />
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
         <AlertTitle>Forbidden!</AlertTitle>
         <AlertDescription>
           You are not authorized to view this page.

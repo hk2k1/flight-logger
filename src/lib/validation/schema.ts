@@ -19,11 +19,10 @@ export const FlightLogSchema = z.object({
 });
 
 export const UserSchema = z.object({
-  id: z.string(),
-  username: z.string().min(3, "Username must be at least 3 characters long"),
   name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  role: z.enum(["user", "admin"]),
   image: z.string().optional(),
-  bio: z.string().optional(),
 });
 
 export const LoginSchema = z.object({
@@ -46,4 +45,5 @@ export const RegisterSchema = z.object({
 });
 
 export type FlightLogType = z.infer<typeof FlightLogSchema>;
-export type UserType = z.infer<typeof UserSchema>;
+// export type UserType = z.infer<typeof UserSchema>;
+export type UserFormData = z.infer<typeof UserSchema>;

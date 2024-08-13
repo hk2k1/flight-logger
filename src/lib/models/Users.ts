@@ -1,8 +1,17 @@
 import mongoose from "mongoose";
 
+export interface IUser {
+  // _id: string;
+  name: string;
+  email: string;
+  role: "user" | "admin";
+  image?: string;
+  provider?: "email" | "google" | "github";
+}
+
 const userSchema = new mongoose.Schema(
   {
-    username: { type: String, lowercase: true },
+    // _id: { type: String },
     name: { type: String, required: true },
     email: {
       type: String,
@@ -13,20 +22,18 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     image: String,
-    bio: String,
     flightLogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "FlightLogs" }],
-    path: String,
-    role: { type: String, default: "user" },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
     provider: { type: String, default: "email" },
   },
   { timestamps: true }
 );
 
 // const Users = mongoose?.models.Users || mongoose?.model("Users", userSchema);
-let Users;
+let Users: mongoose.Model<IUser>;
 try {
-  Users = mongoose.model("Users");
+  Users = mongoose.model<IUser>("Users");
 } catch {
-  Users = mongoose.model("Users", userSchema);
+  Users = mongoose.model<IUser>("Users", userSchema);
 }
 export default Users;

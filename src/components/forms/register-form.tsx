@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -42,6 +42,7 @@ export default function RegisterForm() {
     resolver: zodResolver(RegisterSchema),
     defaultValues,
   });
+  const router = useRouter();
 
   const onSubmit = async (values: UserFormValue) => {
     startTransition(() => {
@@ -50,6 +51,8 @@ export default function RegisterForm() {
           toast.error(data.error);
           return;
         }
+        form.reset();
+        router.refresh();
         toast.success("Account Created!");
       });
     });

@@ -3,7 +3,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "@/lib/validation/schema";
-import { getUserByEmail, getUserById } from "./lib/actions/user.action";
+import { getUserByEmail, getUserById } from "./lib/actions/user-auth-action";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
 import { authUser, oAuthUser } from "@/lib/actions/authUser";

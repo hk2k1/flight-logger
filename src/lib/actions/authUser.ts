@@ -20,7 +20,7 @@
 import Users from "../models/Users";
 import { connectToDB } from "../mongoose";
 import { LoginSchema } from "../validation/schema";
-import { getUserByEmail } from "./user.action";
+import { getUserByEmail } from "./user-action-deprecated";
 import bcrypt from "bcryptjs";
 
 export const authUser = async (credentials: any) => {
