@@ -82,7 +82,8 @@ export function CreateUserDialog() {
           <DialogHeader>
             <DialogTitle>Create New User</DialogTitle>
             <DialogDescription>
-              Enter the details for the new user. Click save when you're done.
+              Enter the details for the new user. Click save when you&apos;re
+              done.
             </DialogDescription>
           </DialogHeader>
           <RegisterForm />

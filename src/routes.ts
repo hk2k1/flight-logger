@@ -1,6 +1,6 @@
 // all the routes available for logged out users
 // routes that do not require auth
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/not-found"];
 
 //routes that require authentication
 export const authRoutes = ["/login", "/register"];

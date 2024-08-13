@@ -78,7 +78,7 @@ export function UpdateUserDrawer({ user, children }: UpdateUserDrawerProps) {
         <DrawerHeader>
           <DrawerTitle>Update User</DrawerTitle>
           <DrawerDescription>
-            Make changes to the user here. Click save when you're done.
+            Make changes to the user here. Click save when you&apos;re done.
           </DrawerDescription>
         </DrawerHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
