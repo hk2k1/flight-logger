@@ -24,6 +24,10 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/tables/flight-tables/data-table-pagination";
 import { DataTableToolbar } from "@/components/tables/flight-tables/data-table-toolbar";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { deleteFlightLog } from "@/lib/actions/flightlog.action";
+import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,6 +45,8 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const { toast } = useToast();
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -56,13 +62,57 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
-      columnVisibility,
+      columnVisibility: {
+        ...columnVisibility,
+        email: false,
+        fid: false,
+      },
       rowSelection,
     },
   });
 
+  const handleBulkDelete = async () => {
+    const selectedRows = table.getFilteredSelectedRowModel().rows;
+    if (selectedRows.length === 0) {
+      toast({
+        title: "No rows selected",
+        description: "Please select rows to delete",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      for (const row of selectedRows) {
+        await deleteFlightLog((row.original as any).fid);
+      }
+      toast({
+        title: "Success",
+        description: `${selectedRows.length} flight logs deleted successfully`,
+      });
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting flight logs:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete some flight logs",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-4">
+      <div className="flex justify-between items-center py-2">
+        <Button
+          onClick={handleBulkDelete}
+          variant="destructive"
+          disabled={Object.keys(rowSelection).length === 0}
+        >
+          Delete Selected
+        </Button>
+        {/* Add other table controls here */}
+      </div>
       <DataTableToolbar table={table} />
       <div className="rounded-md border overflow-hidden">
         <div className="overflow-x-auto">

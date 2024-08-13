@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { Types } from "mongoose";
+// import { v4 as uuidv4 } from "uuid";
 
 export const FlightLogSchema = z.object({
   tailNumber: z.string().min(1, "Tail number is required"),
@@ -12,6 +14,8 @@ export const FlightLogSchema = z.object({
       /^(\d+h)?\s*(\d+m)?$/,
       "Invalid duration format. Use format like '2h 30m' or '45m'"
     ),
+  // email: z.string().email(),
+  // fid: z.string().default(uuidv4()),
 });
 
 export const UserSchema = z.object({

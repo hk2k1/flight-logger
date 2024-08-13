@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,9 +15,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { createFlightLog } from "@/lib/actions/flightlog.action";
-
 import { FlightLogSchema } from "@/lib/validation/schema";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -28,26 +34,28 @@ type FlightLogFormData = z.infer<typeof FlightLogSchema>;
 export function CreateFlightLogDialog() {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FlightLogFormData>({
-    resolver: zodResolver(FlightLogSchema),
-  });
   const router = useRouter();
+
+  const form = useForm<FlightLogFormData>({
+    resolver: zodResolver(FlightLogSchema),
+    defaultValues: {
+      tailNumber: "",
+      flightID: "",
+      takeoff: "",
+      landing: "",
+      duration: "",
+    },
+  });
 
   const onSubmit = async (data: FlightLogFormData) => {
     try {
       await createFlightLog(data);
-      // toast.success("Flight log created successfully");
       toast({
         title: "Success",
         description: "Flight log created successfully",
       });
       setOpen(false);
-      reset();
+      form.reset();
       router.refresh();
     } catch (error) {
       toast({
@@ -71,93 +79,80 @@ export function CreateFlightLogDialog() {
             you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="tailNumber" className="text-right">
-                Tail Number
-              </Label>
-              <Input
-                id="tailNumber"
-                className="col-span-3"
-                placeholder="N12345"
-                {...register("tailNumber")}
-              />
-              {errors.tailNumber && (
-                <p className="col-span-3 col-start-2 text-sm text-red-500">
-                  {errors.tailNumber.message}
-                </p>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="tailNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tail Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="N12345" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="flightID" className="text-right">
-                Flight ID
-              </Label>
-              <Input
-                id="flightID"
-                className="col-span-3"
-                placeholder="ID12"
-                {...register("flightID")}
-              />
-              {errors.flightID && (
-                <p className="col-span-3 col-start-2 text-sm text-red-500">
-                  {errors.flightID.message}
-                </p>
+            />
+            <FormField
+              control={form.control}
+              name="flightID"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Flight ID</FormLabel>
+                  <FormControl>
+                    <Input placeholder="ID12" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="takeoff" className="text-right">
-                Takeoff Location
-              </Label>
-              <Input
-                id="takeoff"
-                className="col-span-3"
-                placeholder="Singapore"
-                {...register("takeoff")}
-              />
-              {errors.takeoff && (
-                <p className="col-span-3 col-start-2 text-sm text-red-500">
-                  {errors.takeoff.message}
-                </p>
+            />
+            <FormField
+              control={form.control}
+              name="takeoff"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Takeoff Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Singapore" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="landing" className="text-right">
-                Landing Location
-              </Label>
-              <Input
-                id="landing"
-                className="col-span-3"
-                placeholder="North Korea"
-                {...register("landing")}
-              />
-              {errors.landing && (
-                <p className="col-span-3 col-start-2 text-sm text-red-500">
-                  {errors.landing.message}
-                </p>
+            />
+            <FormField
+              control={form.control}
+              name="landing"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Landing Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="North Korea" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="duration" className="text-right">
-                Duration
-              </Label>
-              <Input
-                id="duration"
-                className="col-span-3"
-                placeholder="e.g., 2h 30m"
-                {...register("duration")}
-              />
-              {errors.duration && (
-                <p className="col-span-3 col-start-2 text-sm text-red-500">
-                  {errors.duration.message}
-                </p>
+            />
+            <FormField
+              control={form.control}
+              name="duration"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Duration</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., 2h 30m" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit">Save Flight Log</Button>
-          </DialogFooter>
-        </form>
+            />
+          </form>
+        </Form>
+        <DialogFooter>
+          <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
+            Save Flight Log
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
