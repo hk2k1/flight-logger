@@ -41,5 +41,15 @@ export const config = {
   matcher: [
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
   ],
-  unstable_allowDynamic: ["/node_modules/reflect-metadata/**"],
+  runtime: "nodejs",
+  unstable_allowDynamic: [
+    // allows a single file
+    "/src/db/lib/dbConnect.js",
+    // use a glob to allow anything in the function-bind 3rd party module
+    "/node_modules/mongoose/dist/**",
+    // allows a single file
+    "/lib/utilities.js",
+    // use a glob to allow anything in the function-bind 3rd party module
+    "/node_modules/function-bind/**",
+  ],
 };
