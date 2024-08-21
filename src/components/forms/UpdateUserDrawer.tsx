@@ -53,7 +53,7 @@ export function UpdateUserDrawer({ user, children }: UpdateUserDrawerProps) {
 
   const onSubmit = async (data: UserFormData) => {
     try {
-      console.log("Updating user:", user);
+      // console.log("Updating user:", user);
       await updateUser(user.id, data);
       toast({
         title: "Success",

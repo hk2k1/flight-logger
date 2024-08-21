@@ -54,7 +54,7 @@ export async function createUser(data: UserFormData) {
 export async function updateUser(id: string, data: UserFormData) {
   await connectToDB();
   const user = await auth();
-
+  // console.log(user);
   if (user?.user.role !== "admin") {
     console.log("Unauthorized");
     // throw new Error("Unauthorized");

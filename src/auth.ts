@@ -28,11 +28,14 @@ export const {
       return session;
     },
     async jwt({ token }) {
+      // console.log("token.role", token);
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
       if (!existingUser) {
+        // console.log("EXISTING USER NOT EXIST");
         return token;
       }
+      // console.log("existingUser", existingUser);
       token.role = existingUser.role;
       return token;
     },

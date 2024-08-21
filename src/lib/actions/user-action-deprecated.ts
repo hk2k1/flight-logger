@@ -39,7 +39,7 @@ export const getUserByEmail = async (email: string) => {
 export const getUserById = async (id: string) => {
   try {
     await connectToDB();
-    return await Users.findOne({ id });
+    return await Users.findByIdAndUpdate(id, { lean: true });
   } catch {
     return null;
   }

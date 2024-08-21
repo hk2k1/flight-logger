@@ -18,6 +18,7 @@ const breadcrumbItems = [
 
 export default async function Dashboard() {
   const user = await auth();
+  // console.log("page user", user);
   if (user?.user.role !== "admin") {
     return (
       <div className="p-10">
