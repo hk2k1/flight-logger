@@ -1,6 +1,22 @@
 # FlightLogger
 
-FlightLogger is a sophisticated Single Page Application (SPA) built with Next.js and MongoDB, designed for pilots to efficiently create and manage their flight log entries. This project was developed as part of the ST Engineering 1st Round Assessment.
+FlightLogger is a sophisticated Single Page Application (SPA) built with Next.js and MongoDB, designed for pilots to efficiently create and manage their flight log entries.
+
+## Update in Progress 🚀
+
+> [!NOTE]
+> I am currently enhancing FlightLogger to incorporate Site Reliability Engineering (SRE) practices. The upcoming updates will include:
+   > - Containerization with Docker
+   > - Deployment to Kubernetes
+   > - Orchestrating containers using Kubernetes for scalability and high availability.
+   > - Monitoring with Prometheus and Grafana
+   > - Implementing real-time monitoring, metrics collection, and visualization dashboards.
+   > - Continuous Integration and Continuous Deployment (CI/CD)
+   > - Configuring Horizontal Pod Autoscaler (HPA) to automatically scale resources based on demand.
+   > - Integrating a logging solution for better observability and easier troubleshooting.
+   > - Setting up alerts to proactively notify about system issues or performance bottlenecks.
+>  
+> Stay tuned for detailed updates and documentation!
 
 ## Features
 
